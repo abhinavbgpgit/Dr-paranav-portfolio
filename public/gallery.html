@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery | Dr. Pranav Kumar - Physiotherapy & Fitness Consultant</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --primary:#6366f1;--secondary:#8b5cf6;--accent:#06b6d4;
+      --dark:#0f172a;--light:#f8fafc;--gray-100:#f1f5f9;--gray-700:#334155;--gray-800:#1e293b;
+      --text-light:#e2e8f0;--border:#0f172a33;--radius:14px;--shadow:0 10px 30px rgba(0,0,0,.15)
+    }
+    body.dark{background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%);color:#fff}
+    body.light{background:linear-gradient(135deg,#f0f9ff 0%,#e0f2fe 100%);color:#0f172a}
+    .container{max-width:1200px;margin:0 auto;padding:0 5%}
+    .navbar{
+      position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);
+      background:rgba(15,23,42,.7);border-bottom:1px solid #33415533
+    }
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:1rem 0}
+    .logo{font-weight:800;font-size:1.2rem;background:linear-gradient(45deg,var(--primary),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:flex;gap:.5rem;align-items:center}
+    .nav-actions{display:flex;gap:.75rem;align-items:center}
+    .btn{display:inline-flex;align-items:center;gap:.4rem;border:none;border-radius:10px;padding:.6rem 1rem;cursor:pointer;transition:.2s}
+    .btn-outline{background:transparent;border:2px solid var(--primary);color:var(--primary)}
+    .btn-outline:hover{background:var(--primary);color:#fff;transform:translateY(-2px)}
+    .theme{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid #33415566;background:#0b1220;color:#fff}
+    .hero{padding:4.5rem 0 2rem;text-align:center}
+    .hero h1{font-size:clamp(1.8rem,3vw,2.4rem);line-height:1.2;background:linear-gradient(45deg,var(--primary),var(--secondary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:.6rem;font-weight:800}
+    .hero p{opacity:.85;max-width:760px;margin:.25rem auto 0}
+    .filters{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin:1.5rem 0 2rem}
+    .filter{border:1px solid #47556966;border-radius:999px;padding:.5rem 1rem;background:#0b1220;color:#e2e8f0;cursor:pointer;transition:.2s}
+    .filter.active,.filter:hover{background:linear-gradient(45deg,var(--primary),var(--secondary));border-color:transparent}
+    .gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+    .card{position:relative;border-radius:var(--radius);overflow:hidden;background:#0b1220;border:1px solid #33415566;box-shadow:var(--shadow);cursor:pointer;transform:translateZ(0)}
+    .card img{width:100%;height:200px;object-fit:cover;display:block;filter:saturate(1.05) contrast(1.02)}
+    .badge{position:absolute;top:10px;left:10px;background:rgba(0,0,0,.5);color:#fff;padding:.25rem .5rem;border-radius:999px;font-size:.75rem;border:1px solid #ffffff22}
+    .caption{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(0,0,0,.7),transparent);color:#fff;padding:1.1rem .9rem .8rem;font-size:.95rem}
+    .hidden{display:none !important}
+    /* Light mode overrides */
+    body.light .navbar{background:rgba(255,255,255,.7);border-bottom:1px solid #e2e8f0}
+    body.light .theme{background:#fff;color:#0f172a;border-color:#e2e8f0}
+    body.light .filter{background:#fff;color:#0f172a;border-color:#e2e8f0}
+    body.light .card{background:#fff;border-color:#e2e8f0}
+    .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:100}
+    .lightbox.open{display:flex}
+    .lightbox img{max-width:90vw;max-height:80vh;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+    .lb-caption{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);color:#fff;background:rgba(0,0,0,.5);padding:.5rem 1rem;border-radius:999px;font-size:.95rem;border:1px solid #ffffff22}
+    .lb-btn{position:absolute;top:20px;background:rgba(0,0,0,.5);color:#fff;border:none;border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:1px solid #ffffff22}
+    .lb-close{right:20px}
+    .lb-prev{left:20px;top:50%;transform:translateY(-50%)}
+    .lb-next{right:20px;top:50%;transform:translateY(-50%)}
+    footer{margin:3rem 0 2rem;color:#94a3b8;text-align:center}
+    @media (max-width:520px){.card img{height:160px}}
+  </style>
+</head>
+<body class="dark">
+  <header class="navbar">
+    <div class="container nav-inner">
+      <div class="logo"><i class="fas fa-user-md"></i> Dr. Pranav Kumar</div>
+      <div class="nav-actions">
+        <a class="btn btn-outline" href="/"><i class="fas fa-home"></i> Home</a>
+        <button id="themeToggle" class="theme" aria-label="Toggle theme"><i class="fas fa-sun"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>Image Gallery</h1>
+      <p>Browse albums from our clinics, treatments, events, and before/after journeys. Replace these placeholders with your own photos anytime.</p>
+    </section>
+
+    <div class="filters" role="tablist" aria-label="Album filters">
+      <button class="filter active" data-filter="all" role="tab" aria-selected="true">All</button>
+      <button class="filter" data-filter="clinics" role="tab">Clinics</button>
+      <button class="filter" data-filter="treatments" role="tab">Treatments</button>
+      <button class="filter" data-filter="events" role="tab">Events</button>
+      <button class="filter" data-filter="before-after" role="tab">Before & After</button>
+    </div>
+
+    <section id="gallery" class="gallery-grid" aria-live="polite">
+      <!-- Clinics -->
+      <figure class="card" data-album="clinics" data-caption="Reception - Manipal Physiotherapy & Fitness Centre">
+        <span class="badge">Clinics</span>
+        <img loading="lazy" src="https://placehold.co/800x600/1f2937/ffffff?text=Clinics+01" alt="Clinic reception area">
+        <figcaption class="caption">Reception - Manipal Physiotherapy & Fitness Centre</figcaption>
+      </figure>
+      <figure class="card" data-album="clinics" data-caption="Therapy Room">
+        <span class="badge">Clinics</span>
+        <img loading="lazy" src="https://placehold.co/800x600/111827/ffffff?text=Clinics+02" alt="Therapy room">
+        <figcaption class="caption">Therapy Room</figcaption>
+      </figure>
+      <figure class="card" data-album="clinics" data-caption="Diagnostic Equipment">
+        <span class="badge">Clinics</span>
+        <img loading="lazy" src="https://placehold.co/800x600/0b1320/ffffff?text=Clinics+03" alt="Diagnostic equipment">
+        <figcaption class="caption">Diagnostic Equipment</figcaption>
+      </figure>
+      <figure class="card" data-album="clinics" data-caption="Waiting Lounge">
+        <span class="badge">Clinics</span>
+        <img loading="lazy" src="https://placehold.co/800x600/334155/ffffff?text=Clinics+04" alt="Waiting lounge">
+        <figcaption class="caption">Waiting Lounge</figcaption>
+      </figure>
+      <figure class="card" data-album="clinics" data-caption="Manipal Neuro Diagnostic Centre">
+        <span class="badge">Clinics</span>
+        <img loading="lazy" src="https://placehold.co/800x600/475569/ffffff?text=Clinics+05" alt="Manipal Neuro Diagnostic Centre exterior">
+        <figcaption class="caption">Manipal Neuro Diagnostic Centre</figcaption>
+      </figure>
+      <figure class="card" data-album="clinics" data-caption="Fitness Zone - Gym Area">
+        <span class="badge">Clinics</span>
+        <img loading="lazy" src="https://placehold.co/800x600/64748b/ffffff?text=Clinics+06" alt="Fitness Zone gym area">
+        <figcaption class="caption">Fitness Zone - Gym Area</figcaption>
+      </figure>
+      <figure class="card" data-album="clinics" data-caption="Hitek Physiotherapy Centre - Naugachia">
+        <span class="badge">Clinics</span>
+        <img loading="lazy" src="https://placehold.co/800x600/0ea5e9/ffffff?text=Clinics+07" alt="Hitek Physiotherapy Centre">
+        <figcaption class="caption">Hitek Physiotherapy Centre - Naugachia</figcaption>
+      </figure>
+      <figure class="card" data-album="clinics" data-caption="Electrodiagnosis Setup">
+        <span class="badge">Clinics</span>
+        <img loading="lazy" src="https://placehold.co/800x600/22c55e/ffffff?text=Clinics+08" alt="Electrodiagnosis setup">
+        <figcaption class="caption">Electrodiagnosis Setup</figcaption>
+      </figure>
+
+      <!-- Treatments -->
+      <figure class="card" data-album="treatments" data-caption="Orthopaedic Rehabilitation Session">
+        <span class="badge">Treatments</span>
+        <img loading="lazy" src="https://placehold.co/800x600/ef4444/ffffff?text=Treatments+01" alt="Orthopaedic rehabilitation">
+        <figcaption class="caption">Orthopaedic Rehabilitation Session</figcaption>
+      </figure>
+      <figure class="card" data-album="treatments" data-caption="Manual Therapy - Joint Mobilization">
+        <span class="badge">Treatments</span>
+        <img loading="lazy" src="https://placehold.co/800x600/f59e0b/ffffff?text=Treatments+02" alt="Manual therapy joint mobilization">
+        <figcaption class="caption">Manual Therapy - Joint Mobilization</figcaption>
+      </figure>
+      <figure class="card" data-album="treatments" data-caption="Pediatric Physiotherapy">
+        <span class="badge">Treatments</span>
+        <img loading="lazy" src="https://placehold.co/800x600/10b981/ffffff?text=Treatments+03" alt="Pediatric physiotherapy">
+        <figcaption class="caption">Pediatric Physiotherapy</figcaption>
+      </figure>
+      <figure class="card" data-album="treatments" data-caption="Women's Health - Fitness Program">
+        <span class="badge">Treatments</span>
+        <img loading="lazy" src="https://placehold.co/800x600/06b6d4/ffffff?text=Treatments+04" alt="Women's health fitness program">
+        <figcaption class="caption">Women's Health - Fitness Program</figcaption>
+      </figure>
+      <figure class="card" data-album="treatments" data-caption="Sports Injury Rehab">
+        <span class="badge">Treatments</span>
+        <img loading="lazy" src="https://placehold.co/800x600/8b5cf6/ffffff?text=Treatments+05" alt="Sports injury treatment">
+        <figcaption class="caption">Sports Injury Rehab</figcaption>
+      </figure>
+      <figure class="card" data-album="treatments" data-caption="Therapeutic Exercise Techniques">
+        <span class="badge">Treatments</span>
+        <img loading="lazy" src="https://placehold.co/800x600/6366f1/ffffff?text=Treatments+06" alt="Therapeutic exercise techniques">
+        <figcaption class="caption">Therapeutic Exercise Techniques</figcaption>
+      </figure>
+      <figure class="card" data-album="treatments" data-caption="Healing Stimulation Therapy">
+        <span class="badge">Treatments</span>
+        <img loading="lazy" src="https://placehold.co/800x600/14b8a6/ffffff?text=Treatments+07" alt="Healing stimulation therapy">
+        <figcaption class="caption">Healing Stimulation Therapy</figcaption>
+      </figure>
+      <figure class="card" data-album="treatments" data-caption="Spine Clinic Session">
+        <span class="badge">Treatments</span>
+        <img loading="lazy" src="https://placehold.co/800x600/0ea5e9/ffffff?text=Treatments+08" alt="Spine clinic session">
+        <figcaption class="caption">Spine Clinic Session</figcaption>
+      </figure>
+
+      <!-- Events -->
+      <figure class="card" data-album="events" data-caption="World Physiotherapy Day 2022">
+        <span class="badge">Events</span>
+        <img loading="lazy" src="https://placehold.co/800x600/1d4ed8/ffffff?text=Events+01" alt="World Physiotherapy Day event">
+        <figcaption class="caption">World Physiotherapy Day 2022</figcaption>
+      </figure>
+      <figure class="card" data-album="events" data-caption="Health Awareness Camp">
+        <span class="badge">Events</span>
+        <img loading="lazy" src="https://placehold.co/800x600/7c3aed/ffffff?text=Events+02" alt="Health awareness camp">
+        <figcaption class="caption">Health Awareness Camp</figcaption>
+      </figure>
+      <figure class="card" data-album="events" data-caption="Community Fitness Workshop">
+        <span class="badge">Events</span>
+        <img loading="lazy" src="https://placehold.co/800x600/9333ea/ffffff?text=Events+03" alt="Community fitness workshop">
+        <figcaption class="caption">Community Fitness Workshop</figcaption>
+      </figure>
+      <figure class="card" data-album="events" data-caption="Certificate of Excellence - 2023">
+        <span class="badge">Events</span>
+        <img loading="lazy" src="https://placehold.co/800x600/f97316/ffffff?text=Events+04" alt="Certificate of Excellence">
+        <figcaption class="caption">Certificate of Excellence - 2023</figcaption>
+      </figure>
+      <figure class="card" data-album="events" data-caption="Clinic Opening Ceremony">
+        <span class="badge">Events</span>
+        <img loading="lazy" src="https://placehold.co/800x600/0d9488/ffffff?text=Events+05" alt="Clinic opening ceremony">
+        <figcaption class="caption">Clinic Opening Ceremony</figcaption>
+      </figure>
+      <figure class="card" data-album="events" data-caption="Workshop on Manual Therapy">
+        <span class="badge">Events</span>
+        <img loading="lazy" src="https://placehold.co/800x600/65a30d/ffffff?text=Events+06" alt="Manual therapy workshop">
+        <figcaption class="caption">Workshop on Manual Therapy</figcaption>
+      </figure>
+      <figure class="card" data-album="events" data-caption="CSR - Health Drive">
+        <span class="badge">Events</span>
+        <img loading="lazy" src="https://placehold.co/800x600/ea580c/ffffff?text=Events+07" alt="CSR health drive">
+        <figcaption class="caption">CSR - Health Drive</figcaption>
+      </figure>
+      <figure class="card" data-album="events" data-caption="Local Sports Partner Program">
+        <span class="badge">Events</span>
+        <img loading="lazy" src="https://placehold.co/800x600/a16207/ffffff?text=Events+08" alt="Local sports program">
+        <figcaption class="caption">Local Sports Partner Program</figcaption>
+      </figure>
+
+      <!-- Before & After -->
+      <figure class="card" data-album="before-after" data-caption="Knee Rehab - Before & After">
+        <span class="badge">Before & After</span>
+        <img loading="lazy" src="https://placehold.co/800x600/16a34a/ffffff?text=Before+%26+After+01" alt="Knee rehab progress">
+        <figcaption class="caption">Knee Rehab - Before & After</figcaption>
+      </figure>
+      <figure class="card" data-album="before-after" data-caption="Post-op Shoulder Mobility">
+        <span class="badge">Before & After</span>
+        <img loading="lazy" src="https://placehold.co/800x600/059669/ffffff?text=Before+%26+After+02" alt="Shoulder mobility progress">
+        <figcaption class="caption">Post-op Shoulder Mobility</figcaption>
+      </figure>
+      <figure class="card" data-album="before-after" data-caption="Postural Correction">
+        <span class="badge">Before & After</span>
+        <img loading="lazy" src="https://placehold.co/800x600/0ea5e9/ffffff?text=Before+%26+After+03" alt="Postural correction progress">
+        <figcaption class="caption">Postural Correction</figcaption>
+      </figure>
+      <figure class="card" data-album="before-after" data-caption="Ankle Rehab Journey">
+        <span class="badge">Before & After</span>
+        <img loading="lazy" src="https://placehold.co/800x600/7dd3fc/0f172a?text=Before+%26+After+04" alt="Ankle rehab progress">
+        <figcaption class="caption">Ankle Rehab Journey</figcaption>
+      </figure>
+      <figure class="card" data-album="before-after" data-caption="Spine Strengthening">
+        <span class="badge">Before & After</span>
+        <img loading="lazy" src="https://placehold.co/800x600/60a5fa/0f172a?text=Before+%26+After+05" alt="Spine strengthening progress">
+        <figcaption class="caption">Spine Strengthening</figcaption>
+      </figure>
+      <figure class="card" data-album="before-after" data-caption="Balance & Gait Training">
+        <span class="badge">Before & After</span>
+        <img loading="lazy" src="https://placehold.co/800x600/93c5fd/0f172a?text=Before+%26+After+06" alt="Balance and gait training progress">
+        <figcaption class="caption">Balance & Gait Training</figcaption>
+      </figure>
+      <figure class="card" data-album="before-after" data-caption="Pediatric Milestone Support">
+        <span class="badge">Before & After</span>
+        <img loading="lazy" src="https://placehold.co/800x600/a78bfa/0f172a?text=Before+%26+After+07" alt="Pediatric milestone support">
+        <figcaption class="caption">Pediatric Milestone Support</figcaption>
+      </figure>
+      <figure class="card" data-album="before-after" data-caption="Women's Health - Core Strength">
+        <span class="badge">Before & After</span>
+        <img loading="lazy" src="https://placehold.co/800x600/f0abfc/0f172a?text=Before+%26+After+08" alt="Women's health core strength">
+        <figcaption class="caption">Women's Health - Core Strength</figcaption>
+      </figure>
+    </section>
+
+    <footer>
+      © 2024 Dr. Pranav Kumar — Replace placeholder images with your originals by editing src attributes.
+    </footer>
+  </main>
+
+  <div class="lightbox" id="lightbox" aria-modal="true" role="dialog">
+    <button class="lb-btn lb-close" id="lbClose" aria-label="Close"><i class="fas fa-xmark"></i></button>
+    <button class="lb-btn lb-prev" id="lbPrev" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+    <img id="lbImage" alt="">
+    <div class="lb-caption" id="lbCaption"></div>
+    <button class="lb-btn lb-next" id="lbNext" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+  </div>
+
+  <script>
+    // Theme initialization
+    const body = document.body;
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    body.classList.remove('dark','light');
+    if(savedTheme==='light' || (!savedTheme && !prefersDark)){ body.classList.add('light'); } else { body.classList.add('dark'); }
+    const themeBtn = document.getElementById('themeToggle');
+    const icon = themeBtn.querySelector('i');
+    icon.className = body.classList.contains('dark') ? 'fas fa-sun' : 'fas fa-moon';
+    themeBtn.addEventListener('click',()=>{
+      body.classList.toggle('dark');body.classList.toggle('light');
+      icon.className = body.classList.contains('dark') ? 'fas fa-sun' : 'fas fa-moon';
+      localStorage.setItem('theme', body.classList.contains('dark') ? 'dark' : 'light');
+    });
+
+    // Filtering
+    const filters = document.querySelectorAll('.filter');
+    const cards = Array.from(document.querySelectorAll('.card'));
+    filters.forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        filters.forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        const f = btn.dataset.filter;
+        cards.forEach(c=>{
+          c.classList.toggle('hidden', !(f==='all' || c.dataset.album===f));
+        });
+      });
+    });
+
+    // Lightbox
+   const lb = document.getElementById('lightbox');
+   const lbImg = document.getElementById('lbImage');
+   const lbCap = document.getElementById('lbCaption');
+   const lbClose = document.getElementById('lbClose');
+   const lbPrev = document.getElementById('lbPrev');
+   const lbNext = document.getElementById('lbNext');
+   let currentIndex = 0;
+
+   function visibleCards(){
+     return cards.filter(c=>!c.classList.contains('hidden'));
+   }
+   function openAt(idx){
+     const list = visibleCards();
+     if(!list.length) return;
+     currentIndex = (idx+list.length)%list.length;
+     const fig = list[currentIndex];
+     const img = fig.querySelector('img');
+     lbImg.src = img.src;
+     lbImg.alt = img.alt || '';
+     lbCap.textContent = fig.dataset.caption || '';
+     lb.classList.add('open');
+     document.body.style.overflow='hidden';
+   }
+   function closeLb(){
+     lb.classList.remove('open');
+     document.body.style.overflow='';
+   }
+   function next(){ openAt(currentIndex+1); }
+   function prev(){ openAt(currentIndex-1); }
+
+   cards.forEach((c,idx)=>c.addEventListener('click',()=>openAt(visibleCards().indexOf(c))));
+   lbClose.addEventListener('click',closeLb);
+   lbNext.addEventListener('click',next);
+   lbPrev.addEventListener('click',prev);
+   lb.addEventListener('click',(e)=>{ if(e.target===lb) closeLb(); });
+   window.addEventListener('keydown',(e)=>{
+     if(!lb.classList.contains('open')) return;
+     if(e.key==='Escape') closeLb();
+     if(e.key==='ArrowRight') next();
+     if(e.key==='ArrowLeft') prev();
+   });
+  </script>
+</body>
+</html>
