@@ -21,12 +21,20 @@ export default function Side() {
       </div>
       <div className="h-[220px]"></div>
       {/* Profile Image */}
-      <img
-        src={profile_pic}
-        alt="Dr. Robert Gibbons"
-        className="w-full h-64 object-cover mb-4 absolute top-11 left-0"
-        style={{ clipPath: "polygon(0 14%, 100% 5%, 100% 93%, 0% 100%)" }}
-      />
+      <div
+        className="w-full h-64 mb-4 absolute top-11 left-0 overflow-hidden"
+        style={{
+          clipPath: "polygon(0 14%, 100% 5%, 100% 93%, 0% 100%)",
+          background:
+            "radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(138, 227, 242, 1) 49%, rgba(0, 228, 232, 1) 100%)",
+        }}
+      >
+        <img
+          src={profile_pic}
+          alt="Dr. Robert Gibbons"
+          className="w-full h-full object-cover mix-blend-normal"
+        />
+      </div>
 
       <img
         src={logo}
