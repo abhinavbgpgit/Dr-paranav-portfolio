@@ -20,10 +20,16 @@ const Main = () => {
       >
         <h2 className="text-xl font-bold mb-4 border-b-2 border-blue-500">About Me</h2>
         <p className="text-gray-700 leading-relaxed">
-          Started earnest brother believe an exposed so. Me he believing daughters if forfeited at furniture. Age again and stuff downs spoke. Late hour new nay able fat each sell. Nor themselves age introduced frequently use unsatiable devonshire get. They why quit gay cold rose deal park. One same they four did ask busy. Reserved opinions fat him nay position. Breakfast as zealously incommode do agreeable furniture. One too nay led fanny allow plate.
+          I am <strong>Dr. Pranav Kumar</strong>, a highly accomplished <strong>Consultant Physical Therapist and Spine Specialist</strong> with over two decades of clinical expertise in <strong>Orthopaedic Manipulation Therapy</strong> and <strong>Spinal Rehabilitation</strong>. My passion lies in providing <strong>non-surgical, evidence-based solutions</strong> for complex spinal and musculoskeletal conditions, helping patients restore mobility, reduce pain, and reclaim quality of life.
+          <br /><br />
+          I hold a <strong>Bachelor’s in Physical Therapy (BPT)</strong> from MAHE, Manipal, and a <strong>Master’s in Physical Therapy in Orthopedics</strong>, along with an <strong>MBA in Human Resource Management</strong>. I am a <strong>Certified Manipulation Therapist</strong> trained in globally recognized techniques such as <strong>Cyriax</strong>, <strong>Maitland</strong>, <strong>McKenzie</strong>, <strong>Mulligan</strong>, <strong>Myofascial Release</strong>, and <strong>Butter techniques</strong>. My qualifications also extend to <strong>Pelvic Floor Rehabilitation</strong> and <strong>Health Promotion</strong>, with professional memberships including <strong>MIAP, FAGE, and MTFI</strong>.
         </p>
         <p className="text-gray-700 leading-relaxed mt-4">
-          Quick six blind smart out burst. Perfectly on furniture dejection determine my depending an to. Add short water court fat. Her bachelor honoured perceive securing but desirous ham required. Questions deficient acuteness to engrossed as. Entirely led ten humoured greatest and yourself. Besides ye country on observe. She continue appetite endeavor she judgment interest the met. For she surrounded motionless fat resolution may.
+          As the founder of <strong>Pro Spine</strong>, my mission is to integrate <strong>advanced manual therapy</strong> with <strong>cutting-edge technologies</strong> such as <strong>Non-Invasive Robotic Spinal Decompression Therapy</strong> to deliver the highest standard of care. I am also the Managing Trustee of <strong>Sujla Foundation</strong>, actively involved in public health initiatives, ergonomic workshops, and physiotherapy awareness programs.
+          <br /><br />
+          Beyond clinical work, I am dedicated to education and mentorship through <strong>Pro Spine Academy</strong>, training physiotherapists in advanced clinical skills. My commitment to healthcare excellence has been recognized with multiple awards, including the <strong>Doctor’s Pride Award</strong> by the <strong>Dainik Bhaskar Group</strong>.
+          <br /><br />
+          Every patient I meet is an opportunity to make a positive change—one spine, one step, one life at a time.
         </p>
       </motion.div>
 
