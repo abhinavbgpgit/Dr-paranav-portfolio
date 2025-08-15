@@ -1,27 +1,42 @@
-import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
+import { FaHome, FaFacebookF, FaWhatsapp, FaDribbble, FaPaperPlane } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 
-const linkBase = 'hover:text-blue-600 transition-colors';
-const activeClass = 'text-blue-600 font-semibold';
-
-export default function Header() {
+const Header = () => {
   return (
-    <header className="flex justify-between items-center px-6 py-4 bg-white shadow mt-11">
-      <nav className="flex items-center gap-6">
-        <NavLink to="/" end aria-label="Home" className={({ isActive }) => `${linkBase} ${isActive ? activeClass : 'text-blue-500'}`}>🏠</NavLink>
-        <NavLink to="/resume" className={({ isActive }) => `${linkBase} ${isActive ? activeClass : ''}`}>Resume</NavLink>
-        <NavLink to="/awards" className={({ isActive }) => `${linkBase} ${isActive ? activeClass : ''}`}>Awards</NavLink>
-        <NavLink to="/blog" className={({ isActive }) => `${linkBase} ${isActive ? activeClass : ''}`}>Blog</NavLink>
-        <NavLink to="/contact" className={({ isActive }) => `${linkBase} ${isActive ? activeClass : ''}`}>Contact</NavLink>
-        <NavLink to="/gallery" className={({ isActive }) => `${linkBase} ${isActive ? activeClass : ''}`}>Gallery</NavLink>
-        <NavLink to="/in-news" className={({ isActive }) => `${linkBase} ${isActive ? activeClass : ''}`}>InNews</NavLink>
+  <header className="bg-white shadow-sm rounded-xl flex items-center pl-4 pr-24 py-1 mt-10">
+      {/* Left Icon Section */}
+  <Link to="/" className=" bg-blue-800 w-20 h-16 rounded-l-xl flex items-center justify-center">
+        <FaHome className="text-white text-lg" />
+      </Link>
+
+      {/* Navigation Links */}
+  <nav className="flex gap-6 ml-6 font-semibold text-sm mx-auto mr-8">
+        <Link to="/resume" className="hover:text-blue-600">RESUME</Link>
+        <Link to="/awards" className="hover:text-blue-600">AWARDS</Link>
+        <Link to="/blog" className="hover:text-blue-600">BLOG</Link>
+        <Link to="/gallery" className="hover:text-blue-600">GALLERY</Link>
+        <Link to="/in-news" className="hover:text-blue-600">INNEWS</Link>
+        <Link to="/contact" className="hover:text-blue-600">CONTACT</Link>
       </nav>
-      <div className="flex items-center gap-4">
-        <a href="#" aria-label="Website">🌐</a>
-        <a href="#" aria-label="Twitter">🐦</a>
-        <a href="#" aria-label="Instagram">📷</a>
-       
+
+      {/* Social Icons shifted to the far right */}
+      <div className="flex gap-4 text-black text-sm ml-auto">
+        <a href="#" className="group">
+          <FaWhatsapp className="text-2xl group-hover:text-green-500 transition-colors duration-200" />
+        </a>
+        <a href="#" className="group">
+          <FaFacebookF className="text-2xl group-hover:text-blue-600 transition-colors duration-200" />
+        </a>
+        <a href="#" className="group">
+          <FaXTwitter className="text-2xl group-hover:text-black transition-colors duration-200" />
+        </a>
       </div>
+
+  {/* Hire Me Button removed as requested */}
     </header>
   );
-}
+};
+
+export default Header;
