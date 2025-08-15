@@ -10,6 +10,7 @@ import Blog from './pages/blog';
 import Contact from './pages/contact';
 import InNews from './pages/InNews';
 import Gallery from './pages/gallery';
+import BlogDetail from './pages/blog/BlogDetail';
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
               <Route path="/resume" element={<Resume />} />
               <Route path="/awards" element={<Awards />} />
               <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:id" element={<BlogDetail />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/in-news" element={<InNews />} />
               <Route path="/gallery" element={<Gallery />} />
