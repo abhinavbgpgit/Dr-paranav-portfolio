@@ -11,6 +11,7 @@ import Contact from './pages/contact';
 import InNews from './pages/InNews';
 import Gallery from './pages/gallery';
 import BlogDetail from './pages/blog/BlogDetail';
+import More from './pages/more/More';
 
 export default function App() {
   return (
@@ -29,11 +30,11 @@ export default function App() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/in-news" element={<InNews />} />
               <Route path="/gallery" element={<Gallery />} />
+              <Route path="/more" element={<More />} />
             </Routes>
-             <Footer />
+            <Footer />
           </div>
         </div>
-       
       </div>
     </BrowserRouter>
   );
