@@ -1,87 +1,23 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
-import {
-  FaHome,
-  FaBriefcase,
-  FaTrophy,
-  FaRegNewspaper,
-  FaImages,
-  FaNewspaper,
-  FaEnvelope,
-} from "react-icons/fa";
+import { Link, NavLink, useLocation } from "react-router-dom";
+import menuItems from "../json/menuItems.json";
 
-// Menu data structure matching the document
-const MENU_ITEMS = [
-  {
-    label: "Home",
-    path: "/",
-    children: [
-      { label: "Welcome Message", path: "/welcome" },
-      { label: "Mission / Tagline", path: "/mission" },
-      { label: "Quick Highlights", path: "/highlights" },
-    ],
-  },
-  {
-    label: "About Me",
-    path: "/about",
-    children: [
-      { label: "Profile / Biography", path: "/about/profile" },
-      { label: "Qualifications", path: "/about/qualifications" },
-      { label: "Family Tree", path: "/about/family" },
-      { label: "Mentors & Inspirations", path: "/about/mentors" },
-    ],
-  },
-  {
-    label: "My Ventures",
-    path: "/ventures",
-    children: [
-      { label: "Manipal Physiotherapy & Fitness Centre (2004)", path: "/ventures/manipal-physio" },
-      { label: "Manipal Neuro Diagnostic Centre (2008)", path: "/ventures/neuro-diagnostic" },
-      { label: "Fitness Zone (2013)", path: "/ventures/fitness-zone" },
-      { label: "Hitek Physiotherapy Centre (2024)", path: "/ventures/hitek" },
-      {
-        label: "Pro Spine (2024)",
-        path: "/ventures/pro-spine",
-        children: [
-          { label: "Pro Spine Academy programs", path: "/ventures/pro-spine/academy" },
-        ],
-      },
-      { label: "Sujla Foundation (2012)", path: "/ventures/sujla" },
-    ],
-  },
-  {
-    label: "Achievements",
-    path: "/achievements",
-    children: [
-      { label: "Awards & Recognitions", path: "/achievements/awards" },
-      { label: "Media Coverage", path: "/achievements/media" },
-      { label: "Memberships", path: "/achievements/memberships" },
-    ],
-  },
-  {
-    label: "Knowledge Hub",
-    path: "/knowledge",
-    children: [
-      { label: "Areas of Expertise", path: "/knowledge/expertise" },
-      { label: "Workshops & Training", path: "/knowledge/workshops" },
-      { label: "Articles & Publications", path: "/knowledge/articles" },
-      { label: "Motivator’s Corner", path: "/knowledge/motivator" },
-    ],
-  },
-  {
-    label: "Gallery & Contact",
-    path: "/gallery-contact",
-    children: [
-      { label: "Photo Gallery", path: "/gallery/photos" },
-      { label: "Video Gallery", path: "/gallery/videos" },
-      { label: "Testimonials", path: "/gallery/testimonials" },
-      { label: "Contact Me", path: "/contact" },
-    ],
-  },
-];
 const Header = () => {
   // State to track which dropdowns are open (by label)
   const [openMenus, setOpenMenus] = useState({});
+  // Track the active submenu path (array of labels)
+  const [activePath, setActivePath] = useState([]);
+  // Track the currently hovered menu path (array of labels)
+  const [hoveredPath, setHoveredPath] = useState([]);
+  // Get current route
+  const location = useLocation();
+
+  // Set Home active by default on initial load if path is "/"
+  useEffect(() => {
+    if (location.pathname === "/") {
+      setActivePath(["Home"]);
+    }
+  }, [location.pathname]);
 
   // Close all dropdowns on outside click
   const headerRef = useRef(null);
@@ -103,45 +39,77 @@ const Header = () => {
     }));
   };
 
+  // Handle mouse leave for the entire header to close menus
+  const handleHeaderMouseLeave = () => {
+    setOpenMenus({});
+    setHoveredPath([]);
+  };
+
   // Recursive menu item renderer
-  const MenuItem = ({ item, depth = 0 }) => {
+  const MenuItem = ({ item, depth = 0, parentPath = [] }) => {
     const hasChildren = item.children && item.children.length > 0;
     const isOpen = openMenus[item.label];
 
+    // Build the full path to this item
+    const thisPath = [...parentPath, item.label];
+
+    // Helper: check if a path is a prefix of another
+    const isPrefix = (prefix, arr) =>
+      prefix.length <= arr.length &&
+      prefix.every((v, i) => v === arr[i]);
+
+    // Active if thisPath is a prefix of activePath
+    const isActivePath = isPrefix(thisPath, activePath);
+
+    // Hovered if thisPath is a prefix of hoveredPath
+    const isHoveredPath = isPrefix(thisPath, hoveredPath);
+
     return (
-      <div className={`relative group ${depth === 0 ? "mx-2" : ""}`}>
+      <div
+        className={`relative group ${depth === 0 ? "mx-2" : ""}`}
+        onMouseEnter={() => {
+          if (hasChildren) setOpenMenus({ [item.label]: true });
+          setHoveredPath(thisPath);
+        }}
+      >
         <NavLink
           to={item.path}
-          className={({ isActive }) =>
-            [
+          className={({ isActive }) => {
+            // Priority: active (clicked) > hovered > default
+            return [
               depth === 0
                 ? "px-4 py-2 rounded-md font-semibold text-sm transition-colors flex items-center"
                 : "block px-4 py-2 text-sm rounded transition-colors whitespace-nowrap",
-              isActive
+              isActivePath
                 ? "bg-blue-800 text-white"
-                : "hover:bg-blue-400 hover:text-white text-black",
+                : isHoveredPath
+                  ? "bg-blue-100 text-black"
+                  : "hover:bg-blue-200 hover:text-black text-black",
               hasChildren ? "pr-8" : "",
               "focus:outline-none focus:ring-2 focus:ring-blue-400",
-            ].join(" ")
-          }
+            ].join(" ");
+          }}
           onClick={() => {
             if (hasChildren) {
+              // Set active path to this menu
+              setActivePath((prev) => {
+                // If already active, close it
+                if (isPrefix(thisPath, prev)) {
+                  return prev.slice(0, thisPath.length - 1);
+                }
+                // Set path up to this depth
+                return thisPath;
+              });
               toggleMenu(item.label);
             } else {
               setOpenMenus({});
+              // Set active path to this item and its parents
+              setActivePath(thisPath);
             }
-          }}
-          onMouseEnter={() => {
-            if (hasChildren) setOpenMenus((prev) => ({ ...prev, [item.label]: true }));
-          }}
-          onMouseLeave={() => {
-            if (hasChildren) setOpenMenus((prev) => ({ ...prev, [item.label]: false }));
           }}
         >
           {item.label}
-          {hasChildren && (
-            <span className="ml-2 text-xs transition-transform group-hover:rotate-180">&#9662;</span>
-          )}
+          {/* Down arrow removed as per user request */}
         </NavLink>
         {hasChildren && isOpen && (
           <div
@@ -150,11 +118,9 @@ const Header = () => {
               minWidth: depth === 0 ? "220px" : "200px",
               marginLeft: depth > 0 ? "2px" : undefined,
             }}
-            onMouseEnter={() => setOpenMenus((prev) => ({ ...prev, [item.label]: true }))}
-            onMouseLeave={() => setOpenMenus((prev) => ({ ...prev, [item.label]: false }))}
           >
             {item.children.map((child) => (
-              <MenuItem key={child.label} item={child} depth={depth + 1} />
+              <MenuItem key={child.label} item={child} depth={depth + 1} parentPath={thisPath} />
             ))}
           </div>
         )}
@@ -164,12 +130,13 @@ const Header = () => {
 
   return (
     <header
-      className="bg-white shadow-sm rounded-xl flex items-center pl-4 pr-24 py-1 mt-10"
+      className="bg-white shadow-sm rounded-xl flex items-center pl-4 pr-24 py-3"
       ref={headerRef}
+      onMouseLeave={handleHeaderMouseLeave}
     >
       <nav className="flex gap-2 font-semibold text-xs mx-auto">
-        {MENU_ITEMS.map((item) => (
-          <MenuItem key={item.label} item={item} />
+        {menuItems.map((item) => (
+          <MenuItem key={item.label} item={item} parentPath={[]} />
         ))}
       </nav>
       {/* Right CTA */}
