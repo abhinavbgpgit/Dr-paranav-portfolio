@@ -10,189 +10,174 @@ import {
   FaEnvelope,
 } from "react-icons/fa";
 
+// Menu data structure matching the document
+const MENU_ITEMS = [
+  {
+    label: "Home",
+    path: "/",
+    children: [
+      { label: "Welcome Message", path: "/welcome" },
+      { label: "Mission / Tagline", path: "/mission" },
+      { label: "Quick Highlights", path: "/highlights" },
+    ],
+  },
+  {
+    label: "About Me",
+    path: "/about",
+    children: [
+      { label: "Profile / Biography", path: "/about/profile" },
+      { label: "Qualifications", path: "/about/qualifications" },
+      { label: "Family Tree", path: "/about/family" },
+      { label: "Mentors & Inspirations", path: "/about/mentors" },
+    ],
+  },
+  {
+    label: "My Ventures",
+    path: "/ventures",
+    children: [
+      { label: "Manipal Physiotherapy & Fitness Centre (2004)", path: "/ventures/manipal-physio" },
+      { label: "Manipal Neuro Diagnostic Centre (2008)", path: "/ventures/neuro-diagnostic" },
+      { label: "Fitness Zone (2013)", path: "/ventures/fitness-zone" },
+      { label: "Hitek Physiotherapy Centre (2024)", path: "/ventures/hitek" },
+      {
+        label: "Pro Spine (2024)",
+        path: "/ventures/pro-spine",
+        children: [
+          { label: "Pro Spine Academy programs", path: "/ventures/pro-spine/academy" },
+        ],
+      },
+      { label: "Sujla Foundation (2012)", path: "/ventures/sujla" },
+    ],
+  },
+  {
+    label: "Achievements",
+    path: "/achievements",
+    children: [
+      { label: "Awards & Recognitions", path: "/achievements/awards" },
+      { label: "Media Coverage", path: "/achievements/media" },
+      { label: "Memberships", path: "/achievements/memberships" },
+    ],
+  },
+  {
+    label: "Knowledge Hub",
+    path: "/knowledge",
+    children: [
+      { label: "Areas of Expertise", path: "/knowledge/expertise" },
+      { label: "Workshops & Training", path: "/knowledge/workshops" },
+      { label: "Articles & Publications", path: "/knowledge/articles" },
+      { label: "Motivator’s Corner", path: "/knowledge/motivator" },
+    ],
+  },
+  {
+    label: "Gallery & Contact",
+    path: "/gallery-contact",
+    children: [
+      { label: "Photo Gallery", path: "/gallery/photos" },
+      { label: "Video Gallery", path: "/gallery/videos" },
+      { label: "Testimonials", path: "/gallery/testimonials" },
+      { label: "Contact Me", path: "/contact" },
+    ],
+  },
+];
 const Header = () => {
-  const [isMoreOpen, setIsMoreOpen] = useState(false);
-  const moreRef = useRef(null);
+  // State to track which dropdowns are open (by label)
+  const [openMenus, setOpenMenus] = useState({});
 
-  // Close dropdown on outside click
+  // Close all dropdowns on outside click
+  const headerRef = useRef(null);
   useEffect(() => {
     const onClickOutside = (e) => {
-      if (moreRef.current && !moreRef.current.contains(e.target)) {
-        setIsMoreOpen(false);
+      if (headerRef.current && !headerRef.current.contains(e.target)) {
+        setOpenMenus({});
       }
     };
     document.addEventListener("mousedown", onClickOutside);
     return () => document.removeEventListener("mousedown", onClickOutside);
   }, []);
 
-  const baseTile =
-    "w-20 h-16 flex flex-col items-center justify-center rounded-md transition-colors";
-  const tileClass = ({ isActive }) =>
-    [
-      baseTile,
-      isActive
-        ? "bg-blue-800 text-white"
-        : "hover:bg-blue-400 hover:text-white text-black",
-    ].join(" ");
+  // Toggle dropdown open/close
+  const toggleMenu = (label) => {
+    setOpenMenus((prev) => ({
+      ...prev,
+      [label]: !prev[label],
+    }));
+  };
 
-  return (
-    <header className="bg-white shadow-sm rounded-xl flex items-center pl-4 pr-24 py-1 mt-10">
-      {/* Left Icon Section (Home/About) */}
-      <div>
+  // Recursive menu item renderer
+  const MenuItem = ({ item, depth = 0 }) => {
+    const hasChildren = item.children && item.children.length > 0;
+    const isOpen = openMenus[item.label];
+
+    return (
+      <div className={`relative group ${depth === 0 ? "mx-2" : ""}`}>
         <NavLink
-          to="/"
+          to={item.path}
           className={({ isActive }) =>
             [
-              "w-20 h-16 rounded-l-xl flex flex-col items-center justify-center transition-colors",
-              isActive ? "bg-blue-800 text-white" : "hover:bg-blue-400 hover:text-white text-black",
+              depth === 0
+                ? "px-4 py-2 rounded-md font-semibold text-sm transition-colors flex items-center"
+                : "block px-4 py-2 text-sm rounded transition-colors whitespace-nowrap",
+              isActive
+                ? "bg-blue-800 text-white"
+                : "hover:bg-blue-400 hover:text-white text-black",
+              hasChildren ? "pr-8" : "",
+              "focus:outline-none focus:ring-2 focus:ring-blue-400",
             ].join(" ")
           }
+          onClick={() => {
+            if (hasChildren) {
+              toggleMenu(item.label);
+            } else {
+              setOpenMenus({});
+            }
+          }}
+          onMouseEnter={() => {
+            if (hasChildren) setOpenMenus((prev) => ({ ...prev, [item.label]: true }));
+          }}
+          onMouseLeave={() => {
+            if (hasChildren) setOpenMenus((prev) => ({ ...prev, [item.label]: false }));
+          }}
         >
-          <FaHome className="text-lg" />
-          <span className="mt-0.5 text-xs font-semibold">About</span>
-        </NavLink>
-      </div>
-
-      {/* Navigation Links with icons (except MORE) */}
-      <nav className="flex gap-6 ml-6 font-semibold text-xs mx-auto mr-8">
-        <NavLink to="/resume" className={tileClass}>
-          <FaBriefcase className="text-lg" />
-          <span className="mt-0.5">Resume</span>
-        </NavLink>
-        <NavLink to="/awards" className={tileClass}>
-          <FaTrophy className="text-lg" />
-          <span className="mt-0.5">Awards</span>
-        </NavLink>
-        <NavLink to="/blog" className={tileClass}>
-          <FaRegNewspaper className="text-lg" />
-          <span className="mt-0.5">Blog</span>
-        </NavLink>
-        <NavLink to="/gallery" className={tileClass}>
-          <FaImages className="text-lg" />
-          <span className="mt-0.5">Gallery</span>
-        </NavLink>
-        <NavLink to="/in-news" className={tileClass}>
-          <FaNewspaper className="text-lg" />
-          <span className="mt-0.5">InNews</span>
-        </NavLink>
-        <NavLink to="/contact" className={tileClass}>
-          <FaEnvelope className="text-lg" />
-          <span className="mt-0.5">Contact</span>
-        </NavLink>
-
-        {/* MORE with click-to-open dropdown (no icon) */}
-        <div className="relative" ref={moreRef}>
-          <div className="inline-flex items-center h-16">
-            <NavLink
-              to="/more"
-              className={({ isActive }) =>
-                [
-                  "px-2 py-1 rounded-md font-semibold text-sm transition-colors",
-                  isActive ? "bg-blue-800 text-white" : "hover:bg-blue-400 hover:text-white text-black",
-                ].join(" ")
-              }
-            >
-              MORE
-            </NavLink>
-            <button
-              type="button"
-              aria-haspopup="menu"
-              aria-expanded={isMoreOpen}
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                setIsMoreOpen((v) => !v);
-              }}
-              className="ml-1 h-5 w-5 flex items-center justify-center rounded transition-colors hover:bg-blue-400 hover:text-white focus:outline-none"
-              title="Open more menu"
-            >
-              <svg
-                className={`h-3 w-3 transition-transform duration-200 ${isMoreOpen ? "rotate-180" : ""}`}
-                viewBox="0 0 10 6"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-              >
-                <path
-                  d="M1 1L5 5L9 1"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
-          </div>
-
-          {/* Dropdown panel */}
-          {isMoreOpen && (
-            <div
-              role="menu"
-              className="absolute left-0 mt-2 w-44 rounded-md border border-gray-200 bg-white shadow-lg py-2 z-50"
-            >
-              <NavLink
-                to="/more/about"
-                className={({ isActive }) =>
-                  [
-                    "block px-3 py-2 rounded-sm transition-colors",
-                    isActive ? "bg-blue-800 text-white" : "text-gray-700 hover:bg-blue-400 hover:text-white",
-                  ].join(" ")
-                }
-                onClick={() => setIsMoreOpen(false)}
-                role="menuitem"
-              >
-                About Practice
-              </NavLink>
-              <NavLink
-                to="/more/services"
-                className={({ isActive }) =>
-                  [
-                    "block px-3 py-2 rounded-sm transition-colors",
-                    isActive ? "bg-blue-800 text-white" : "text-gray-700 hover:bg-blue-400 hover:text-white",
-                  ].join(" ")
-                }
-                onClick={() => setIsMoreOpen(false)}
-                role="menuitem"
-              >
-                Services
-              </NavLink>
-              <NavLink
-                to="/more/faqs"
-                className={({ isActive }) =>
-                  [
-                    "block px-3 py-2 rounded-sm transition-colors",
-                    isActive ? "bg-blue-800 text-white" : "text-gray-700 hover:bg-blue-400 hover:text-white",
-                  ].join(" ")
-                }
-                onClick={() => setIsMoreOpen(false)}
-                role="menuitem"
-              >
-                FAQs
-              </NavLink>
-              <NavLink
-                to="/more/downloads"
-                className={({ isActive }) =>
-                  [
-                    "block px-3 py-2 rounded-sm transition-colors",
-                    isActive ? "bg-blue-800 text-white" : "text-gray-700 hover:bg-blue-400 hover:text-white",
-                  ].join(" ")
-                }
-                onClick={() => setIsMoreOpen(false)}
-                role="menuitem"
-              >
-                Downloads
-              </NavLink>
-            </div>
+          {item.label}
+          {hasChildren && (
+            <span className="ml-2 text-xs transition-transform group-hover:rotate-180">&#9662;</span>
           )}
-        </div>
-      </nav>
+        </NavLink>
+        {hasChildren && isOpen && (
+          <div
+            className={`absolute left-0 ${depth === 0 ? "top-full" : "top-0 left-full"} mt-1 min-w-[220px] bg-white border border-gray-300 shadow-2xl rounded-lg z-50 py-1`}
+            style={{
+              minWidth: depth === 0 ? "220px" : "200px",
+              marginLeft: depth > 0 ? "2px" : undefined,
+            }}
+            onMouseEnter={() => setOpenMenus((prev) => ({ ...prev, [item.label]: true }))}
+            onMouseLeave={() => setOpenMenus((prev) => ({ ...prev, [item.label]: false }))}
+          >
+            {item.children.map((child) => (
+              <MenuItem key={child.label} item={child} depth={depth + 1} />
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  };
 
+  return (
+    <header
+      className="bg-white shadow-sm rounded-xl flex items-center pl-4 pr-24 py-1 mt-10"
+      ref={headerRef}
+    >
+      <nav className="flex gap-2 font-semibold text-xs mx-auto">
+        {MENU_ITEMS.map((item) => (
+          <MenuItem key={item.label} item={item} />
+        ))}
+      </nav>
       {/* Right CTA */}
-      <div className="flex gap-4 text-black text-sm ml-auto">
+      {/* <div className="flex gap-4 text-black text-sm ml-auto">
         <button className="rounded-full w-[160px] bg-blue-600 text-white px-4 py-2 text-sm font-semibold hover:bg-blue-700 hover:shadow-md transition-colors shadow-sm">
           Call for Seminar
         </button>
-      </div>
+      </div> */}
     </header>
   );
 };

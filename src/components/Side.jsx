@@ -5,7 +5,7 @@ import profile_pic from "../assets/general/dr_pranav.png";
 import logo from "../assets/logo/logo_physio.png";
 export default function Side() {
   return (
-    <div className="bg-white shadow-md rounded-lg p-4 mt-16 h-[600px] relative min-w-[250px]">
+    <div className="bg-white shadow-md rounded-lg p-4 mt-44 h-[600px] relative min-w-[250px]">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div>

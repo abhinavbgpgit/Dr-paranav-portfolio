@@ -17,7 +17,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <div className="bg-gray-100 min-h-screen flex flex-col">
-        <div className="w-[60%] mx-auto flex flex-1">
+        <div className="w-[60%] mx-auto flex flex-1 bg-slate-600">
           <Side />
           <div className="flex gap-6 p-6 flex-col flex-1">
             <Header />
