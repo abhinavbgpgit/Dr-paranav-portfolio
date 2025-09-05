@@ -1,57 +1,59 @@
 [
   {
-    "label": "Home",
+    "title": "Home",
     "path": "/"
   },
   {
-    "label": "About Me",
+    "title": "About Me",
     "path": "/about",
     "children": [
-      { "label": "Profile / Biography", "path": "/about/profile" },
-      { "label": "Qualifications", "path": "/about/qualifications" },
-      { "label": "Family Tree", "path": "/about/family" },
-      { "label": "Mentors & Inspirations", "path": "/about/mentors" }
+      { "name": "Profile / Biography", "path": "/about/profile", "component": "Profile" },
+      { "name": "Qualifications", "path": "/about/qualifications", "component": "Qualifications" },
+      { "name": "Family Tree", "path": "/about/family", "component": "FamilyTree" },
+      { "name": "Mentors & Inspirations", "path": "/about/mentors", "component": "Mentors" }
     ]
   },
   {
-    "label": "My Ventures",
+    "title": "My Ventures",
     "path": "/ventures",
     "children": [
-      { "label": "Manipal Physiotherapy & Fitness Centre (2004)", "path": "/ventures/manipal-physio" },
-      { "label": "Manipal Neuro Diagnostic Centre (2008)", "path": "/ventures/neuro-diagnostic" },
-      { "label": "Fitness Zone (2013)", "path": "/ventures/fitness-zone" },
-      { "label": "Hitek Physiotherapy Centre (2024)", "path": "/ventures/hitek" },
-      { "label": "Pro Spine (2024)", "path": "/ventures/pro-spine" },
-      { "label": "Sujla Foundation (2012)", "path": "/ventures/sujla" }
+      { "name": "Manipal Physiotherapy & Fitness Centre (2004)", "path": "/ventures/manipal-physio", "component": "ManipalPhysio" },
+      { "name": "Manipal Sports Injury Clinic (2006)", "path": "/ventures/sports-injury", "component": "ManipalSportsInjury" },
+      { "name": "Manipal Pain & Spine Clinic (2007)", "path": "/ventures/pain-spine", "component": "ManipalPainSpine" },
+      { "name": "Manipal Neuro Diagnostic Centre (2008)", "path": "/ventures/neuro-diagnostic", "component": "ManipalNeuroDiagnostic" },
+      { "name": "Fitness Zone (2013)", "path": "/ventures/fitness-zone", "component": "FitnessZone" },
+      { "name": "Hitek Physiotherapy Centre (2024)", "path": "/ventures/hitek", "component": "HitekPhysiotherapy" },
+      { "name": "Pro Spine (2024)", "path": "/ventures/pro-spine", "component": "ProSpine" },
+      { "name": "Sujla Foundation (2012)", "path": "/ventures/sujla", "component": "SujlaFoundation" }
     ]
   },
   {
-    "label": "Achievements",
+    "title": "Achievements",
     "path": "/achievements",
     "children": [
-      { "label": "Awards & Recognitions", "path": "/achievements/awards" },
-      { "label": "Media Coverage", "path": "/achievements/media" },
-      { "label": "Memberships", "path": "/achievements/memberships" }
+      { "name": "Awards & Recognitions", "path": "/achievements/awards", "component": "Awards" },
+      { "name": "Media Coverage", "path": "/achievements/media", "component": "MediaCoverage" },
+      { "name": "Memberships", "path": "/achievements/memberships", "component": "Memberships" }
     ]
   },
   {
-    "label": "Knowledge Hub",
+    "title": "Knowledge Hub",
     "path": "/knowledge",
     "children": [
-      { "label": "Areas of Expertise", "path": "/knowledge/expertise" },
-      { "label": "Workshops & Training", "path": "/knowledge/workshops" },
-      { "label": "Articles & Publications", "path": "/knowledge/articles" },
-      { "label": "Motivator’s Corner", "path": "/knowledge/motivator" }
+      { "name": "Areas of Expertise", "path": "/knowledge/expertise", "component": "Expertise" },
+      { "name": "Workshops & Training", "path": "/knowledge/workshops", "component": "Workshops" },
+      { "name": "Articles & Publications", "path": "/knowledge/articles", "component": "Articles" },
+      { "name": "Motivator’s Corner", "path": "/knowledge/motivator", "component": "Motivator" }
     ]
   },
   {
-    "label": "Gallery & Contact",
+    "title": "Gallery & Contact",
     "path": "/gallery-contact",
     "children": [
-      { "label": "Photo Gallery", "path": "/gallery/photos" },
-      { "label": "Video Gallery", "path": "/gallery/videos" },
-      { "label": "Testimonials", "path": "/gallery/testimonials" },
-      { "label": "Contact Me", "path": "/contact" }
+      { "name": "Photo Gallery", "path": "/gallery/photos", "component": "PhotoGallery" },
+      { "name": "Video Gallery", "path": "/gallery/videos", "component": "VideoGallery" },
+      { "name": "Testimonials", "path": "/gallery/testimonials", "component": "Testimonials" },
+      { "name": "Contact Me", "path": "/contact", "component": "Contact" }
     ]
   }
 ]
