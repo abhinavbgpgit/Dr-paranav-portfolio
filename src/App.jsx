@@ -74,23 +74,23 @@ Profile,
 export default function App() {
   return (
     <Router>
-      <div className="bg-gray-100 min-h-screen w-full">
+      <div className="min-h-screen w-full bg-gray-200">
         {/* Fixed Header */}
-        <div className="fixed top-6 left-1/2 transform -translate-x-1/2 w-[60%] z-50">
+        <div className="fixed top-6 left-0 w-full px-2 md:left-1/2 md:transform md:-translate-x-1/2 md:w-[70%] md:px-0 z-50">
           <Header />
         </div>
 
         {/* Main Content Layout */}
-        <div className="flex flex-row w-[60%] mx-auto pt-[130px] min-h-screen">
+        <div className="flex fixed left-0 w-full px-2 md:left-1/2 md:transform md:-translate-x-1/2 flex-row md:w-[70%] md:px-0 pt-[130px] min-h-screen">
           {/* Fixed Sidebar */}
-          <div className="sticky top-[80px] h-[calc(100vh-80px)]">
+          <div className="sticky top-[0px] h-[calc(100vh-80px)] hidden md:block">
             <Side />
           </div>
 
           {/* Scrollable Main Content */}
           <div
             className="flex-1 flex flex-col gap-6 p-6 overflow-y-auto"
-            style={{ maxHeight: "calc(100vh - 80px)" }}
+            style={{ maxHeight: "calc(100vh - 180px)" }}
           >
             <Routes>
               {/* ✅ Dynamic routes from JSON */}

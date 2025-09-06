@@ -24,9 +24,7 @@ export default function Side() {
       <div
         className="w-full h-64 mb-4 absolute top-11 left-0 overflow-hidden"
         style={{
-          clipPath: "polygon(0 14%, 100% 5%, 100% 93%, 0% 100%)",
-          background:
-            "radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(138, 227, 242, 1) 49%, rgba(0, 228, 232, 1) 100%)",
+          clipPath: "polygon(0 14%, 100% 5%, 100% 93%, 0% 100%)"
         }}
       >
         <img
@@ -46,10 +44,10 @@ export default function Side() {
       <ul className=" ml-5">
         <li className=" h-10 border-l-2 "></li>
         <li className=" border-l-2 flex items-center  py-2 relative">
-          <span className="absolute top-0 left-[-7px] inline-block bg-blue-500 rounded-full w-3 h-3 mr-2 relative">
-            <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-full w-2 h-2"></span>
+          <span className="absolute top-0 left-[-7px] inline-block rounded-full w-3 h-3 mr-2 relative">
+            <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full w-2 h-2"></span>
           </span>
-          <span className="font-semibold text-xs ml-[-5px]">Name : </span>
+          <span className="text-xs ml-[-5px]">Name : </span>
           <span className=" text-xs ml-1"> Pranav Kumar</span>
         </li>
 
@@ -57,7 +55,7 @@ export default function Side() {
           <span className="absolute top-0 left-[-7px] inline-block bg-blue-500 rounded-full w-3 h-3 mr-2 relative">
             <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-full w-2 h-2"></span>
           </span>
-          <span className="font-semibold text-xs ml-[-5px]">Birthday : </span>
+          <span className="text-xs ml-[-5px]">Birthday : </span>
           <span className=" text-xs ml-1"> 06 Dec 1975</span>
         </li>
 
@@ -65,7 +63,7 @@ export default function Side() {
           <span className="absolute top-0 left-[-7px] inline-block bg-blue-500 rounded-full w-3 h-3 mr-2 relative">
             <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-full w-2 h-2"></span>
           </span>
-          <span className="font-semibold text-xs ml-[-5px]">Job : </span>
+          <span className="text-xs ml-[-5px]">Job : </span>
           <span className=" text-xs ml-1"> Physiotherapist</span>
         </li>
 
@@ -73,7 +71,7 @@ export default function Side() {
           <span className="absolute top-0 left-[-7px] inline-block bg-blue-500 rounded-full w-3 h-3 mr-2 relative">
             <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-full w-2 h-2"></span>
           </span>
-          <span className="font-semibold text-xs ml-[-5px]">Email : </span>
+          <span className="text-xs ml-[-5px]">Email : </span>
           <span className=" text-xs ml-1"> pranav@gmail.com</span>
         </li>
 
@@ -81,13 +79,13 @@ export default function Side() {
           <span className="absolute top-0 left-[-7px] inline-block bg-blue-500 rounded-full w-3 h-3 mr-2 relative">
             <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-full w-2 h-2"></span>
           </span>
-          <span className="font-semibold text-xs ml-[-5px]">Skype : </span>
+          <span className="text-xs ml-[-5px]">Skype : </span>
           <span className=" text-xs ml-1"> paranav85</span>
         </li>
       </ul>
 
       {/* Download CV Button */}
-      <button className="mt-6 bg-white border-2 text-xs  px-3 py-2 rounded-full flex items-center space-x-2 hover:bg-gray-200 transition duration-300">
+      <button className="mt-6 border-2 text-xs  px-3 py-2 rounded-full flex items-center space-x-2 hover:bg-gray-200 transition duration-300">
         <span>Message on Whatsapp</span>
         <IoLogoWhatsapp size={18} className="text-green-500" />
       </button>

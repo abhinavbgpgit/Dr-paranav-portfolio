@@ -11,7 +11,7 @@ export default function Footer() {
             to="/"
             end
             className={({ isActive }) =>
-              `hover:text-blue-600 transition-colors ${isActive ? 'text-blue-600 font-medium' : ''}`
+              `hover:text-blue-600 transition-colors`
             }
             aria-label="Home"
           >
@@ -20,7 +20,7 @@ export default function Footer() {
           <NavLink
             to="/contact"
             className={({ isActive }) =>
-              `hover:text-blue-600 transition-colors ${isActive ? 'text-blue-600 font-medium' : ''}`
+              `hover:text-blue-600 transition-colors`
             }
           >
             Contact
@@ -28,7 +28,7 @@ export default function Footer() {
           <NavLink
             to="/blog"
             className={({ isActive }) =>
-              `hover:text-blue-600 transition-colors ${isActive ? 'text-blue-600 font-medium' : ''}`
+              `hover:text-blue-600 transition-colors`
             }
           >
             Blog
