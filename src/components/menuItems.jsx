@@ -1,0 +1,60 @@
+const menuItems = [
+   {
+     "title": "Home",
+     "path": "/"
+   },
+   {
+     "title": "About Me",
+     "path": "/about",
+     "children": [
+       { "name": "Profile / Biography", "path": "/about/profile", "component": "Profile" },
+       { "name": "Qualifications", "path": "/about/qualifications", "component": "Qualifications" },
+       { "name": "Family Tree", "path": "/about/family", "component": "FamilyTree" },
+       { "name": "Mentors & Inspirations", "path": "/about/mentors", "component": "Mentors" }
+     ]
+   },
+   {
+     "title": "My Ventures",
+     "path": "/ventures",
+     "children": [
+       { "name": "Manipal Physiotherapy & Fitness Centre (2004)", "path": "/ventures/manipal-physio", "component": "ManipalPhysio" },
+       { "name": "Manipal Sports Injury Clinic (2006)", "path": "/ventures/sports-injury", "component": "ManipalSportsInjury" },
+       { "name": "Manipal Pain & Spine Clinic (2007)", "path": "/ventures/pain-spine", "component": "ManipalPainSpine" },
+       { "name": "Manipal Neuro Diagnostic Centre (2008)", "path": "/ventures/neuro-diagnostic", "component": "ManipalNeuroDiagnostic" },
+       { "name": "Fitness Zone (2013)", "path": "/ventures/fitness-zone", "component": "FitnessZone" },
+       { "name": "Hitek Physiotherapy Centre (2024)", "path": "/ventures/hitek", "component": "HitekPhysiotherapy" },
+       { "name": "Pro Spine (2024)", "path": "/ventures/pro-spine", "component": "ProSpine" },
+       { "name": "Sujla Foundation (2012)", "path": "/ventures/sujla", "component": "SujlaFoundation" }
+     ]
+   },
+   {
+     "title": "Achievements",
+     "path": "/achievements",
+     "children": [
+       { "name": "Awards & Recognitions", "path": "/achievements/awards", "component": "Awards" },
+       { "name": "Media Coverage", "path": "/achievements/media", "component": "MediaCoverage" },
+       { "name": "Memberships", "path": "/achievements/memberships", "component": "Memberships" }
+     ]
+   },
+   {
+     "title": "Knowledge Hub",
+     "path": "/knowledge",
+     "children": [
+       { "name": "Areas of Expertise", "path": "/knowledge/expertise", "component": "Expertise" },
+       { "name": "Workshops & Training", "path": "/knowledge/workshops", "component": "Workshops" },
+       { "name": "Articles & Publications", "path": "/knowledge/articles", "component": "Articles" },
+       { "name": "Motivator's Corner", "path": "/knowledge/motivator", "component": "Motivator" }
+     ]
+   },
+   {
+     "title": "Gallery & Contact",
+     "path": "/gallery-contact",
+     "children": [
+       { "name": "Photo Gallery", "path": "/gallery/photos", "component": "PhotoGallery" },
+       { "name": "Video Gallery", "path": "/gallery/videos", "component": "VideoGallery" },
+       { "name": "Testimonials", "path": "/gallery/testimonials", "component": "Testimonials" },
+       { "name": "Contact Me", "path": "/contact", "component": "Contact" }
+     ]
+   }
+ ];
+export default menuItems;
